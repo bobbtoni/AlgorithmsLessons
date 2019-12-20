@@ -70,4 +70,62 @@ public class MyBigArray<T extends Comparable> {
         return true;
     }
 
+    // сортировки
+
+    private void swap(int index1, int index2) {
+        T temp = array[index1];
+        array[index1] = array[index2];
+        array[index2] = temp;
+    }
+
+    public void selectionSort() {
+        for (int i = 0; i < size - 1; i++) {
+            int imin = i;
+            for (int j = i + 1; j < size; j++) {
+                if( array[j].compareTo(array[imin])<0){
+                    imin = j;
+                }
+            }
+            swap(i, imin);
+        }
+    }
+
+    public void insertionSort(){
+        T key;
+        for (int i = 1; i <size ; i++) {
+            int j = i;
+            key  = array[i];
+            while(j>0 && key.compareTo(array[j-1])<0){
+                array[j] = array[j-1];
+                j--;
+            }
+            array[j] = key;
+        }
+    }
+
+        public void bubbleSort(){
+        boolean isSwap;
+        for (int i = size-1; i > 0 ; i--) {
+            isSwap = false;
+            for (int j = 0; j < i ; j++) {
+                if( array[j+1].compareTo(array[j])<0 ){
+                    swap(j+1, j);
+                    isSwap = true;
+                }
+            }
+            if(!isSwap){
+                break;
+            }
+        }
+    }
+
+    @Override
+    public String toString() {
+        StringBuilder stringBuilder = new StringBuilder("{");
+        for (int i = 0; i < size - 1; i++) {
+            stringBuilder.append(array[i] + ", ");
+        }
+        stringBuilder.append(array[size - 1] + "}");
+        return stringBuilder.toString();
+    }
 }
