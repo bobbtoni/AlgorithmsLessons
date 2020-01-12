@@ -2,10 +2,68 @@ import java.util.Iterator;
 import java.util.ListIterator;
 import java.util.NoSuchElementException;
 
-public class MyLinkedList<T> {
+public class MyLinkedList<T> implements Iterable<T>{
     private Node first;
     private Node last;
     private int size = 0;
+
+    public Iterator<T> iterator() {
+        return new Iter();
+    }
+
+    private class Iter implements ListIterator<T>{
+        Node current = new Node(null,first);
+
+
+        @Override
+        public boolean hasNext() {
+            return current.next != null;
+        }
+
+        @Override
+        public T next() {
+            current = current.next;
+            return (T)current.value;
+
+        }
+
+        @Override
+        public boolean hasPrevious() {
+            return current.prev != null;
+        }
+
+        @Override
+        public T previous() {
+            current = current.prev;
+            return (T)current.value;
+        }
+
+        @Override
+        public int nextIndex() {
+            throw new UnsupportedOperationException("nextIndex");
+        }
+
+        @Override
+        public int previousIndex() {
+            throw new UnsupportedOperationException("previousIndex");
+        }
+
+        @Override
+        public void remove() {
+            throw new UnsupportedOperationException("remove");
+        }
+
+        @Override
+        public void set(T t) {
+            throw new UnsupportedOperationException("set");
+        }
+
+        @Override
+        public void add(T t) {
+            throw new UnsupportedOperationException("add");
+        }
+    }
+
 
     private class Node<T> {
         T value;
@@ -21,6 +79,7 @@ public class MyLinkedList<T> {
         public Node(T value, Node next) {
             this.value = value;
             this.next = next;
+            this.prev = null;
         }
 
         public Node(T value) {
