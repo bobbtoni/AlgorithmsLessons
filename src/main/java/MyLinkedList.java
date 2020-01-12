@@ -50,17 +50,30 @@ public class MyLinkedList<T> implements Iterable<T>{
 
         @Override
         public void remove() {
-            throw new UnsupportedOperationException("remove");
+            if (current == null) throw new NullPointerException();
+
+            if (current == first) first = current.next;
+            if (current == last) last = current.prev;
+            if (current.prev != null) current.prev.next = current.next;
+            if (current.next != null) current.next.prev = current.prev;
+            current = current.next;
+            size--;
         }
 
         @Override
         public void set(T t) {
-            throw new UnsupportedOperationException("set");
+            current.value = t;
         }
 
         @Override
         public void add(T t) {
-            throw new UnsupportedOperationException("add");
+            // вставка следующего элемента за текущим
+            Node<T> newNode = new Node<T>(current, t, current.next);
+            if (first == current.next) first = newNode;
+            if (current.next!=null) current.next.prev = newNode;
+            else last = newNode;
+            current.next = newNode;
+            size++;
         }
     }
 
